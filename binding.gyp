@@ -1,33 +1,18 @@
 {
-  "targets": [{
+  "targets": [
+    {
     "target_name": "libinjection",
     "include_dirs": [
       ".",
-      "<!@(node -p \"require('node-addon-api').include\")"
+      "<!@(node -p \"require('node-addon-api').include\")",
+      "libinjection/src/"
     ],
     "libraries": [
+      "<!@(node -p \"process.cwd()\")/libinjection/src/libinjection.a"
     ],
     "sources": [
-      "src/main.cpp"
+      "src/libinjection.cpp"
     ],
-    'ldflags': [
-      '-static-libstdc++',
-      '-static-libgcc',
-      '-lpthread',
-    ],
-    "defines": [ "NAPI_DISABLE_CPP_EXCEPTIONS" ],
-    "xcode_settings": {
-      "MACOSX_DEPLOYMENT_TARGET": "10.10",
-    },
-    "conditions": [
-      ["OS == 'linux'", {
-        'ldflags': ['-Wl,--rpath=\$$ORIGIN']
-      }],
-      ["OS == 'win'", {
-        "cflags": [
-          "/WX"
-        ]
-      }]
-    ]
+    "defines": [ "NAPI_DISABLE_CPP_EXCEPTIONS" ]
   }]
 }
